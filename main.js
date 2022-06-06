@@ -1,4 +1,11 @@
-const computerChoices = ['rock', 'paper', 'scissors'];
+const displayCompScore = document.querySelector('.computer-score');
+const displayPlayerScore = document.querySelector('.player-score');
+const roundMessage = document.querySelector('.round-message');
+const winnerMessage = document.querySelector('.winner-message');
+const playerButtons = document.querySelectorAll('button.card');
+const restartButton = document.querySelector('.restart');
+
+const computerChoices = ['Rock', 'Paper', 'Scissors'];
 let computerScore = 0;
 let playerScore = 0;
 
@@ -6,38 +13,56 @@ function computerPlay() {
   return computerChoices[Math.floor(Math.random() * computerChoices.length)];
 }
 
-function playRound(playerSelection, computerSelection) {
-  if (computerSelection === playerSelection) {
-    return `It's a tie! ${playerSelection} and ${computerSelection}`;
-  } else if (
-    (computerSelection === 'rock' && playerSelection === 'paper') ||
-    (computerSelection === 'paper' && playerSelection === 'scissors') ||
-    (computerSelection === 'scissors' && playerSelection === 'rock')
-  ) {
-    playerScore++;
-    return `You win the round! ${playerSelection} beats ${computerSelection}`;
-  } else {
-    computerScore++;
-    return `Computer wins the round! ${computerSelection} beats ${playerSelection}`;
+function updateScore() {
+  if (computerScore <= 5 && playerScore <= 5) {
+    displayPlayerScore.innerText = `PLAYER SCORE: ${playerScore}`;
+    displayCompScore.innerText = `COMPUTER SCORE: ${computerScore}`;
   }
 }
 
 function getWinner() {
-  if (computerScore > playerScore) {
-    return `Computer won the game with a score of ${computerScore} to ${playerScore}`;
-  } else if (playerScore > computerScore) {
-    return `You won the game with a score of ${playerScore} to ${computerScore}`;
-  } else if (playerScore === computerScore) {
-    return `It's a tie! ${playerScore} to ${computerScore}`;
+  if (computerScore === 5 && computerScore > playerScore) {
+    winnerMessage.style.color = 'var(--computer)';
+    winnerMessage.innerHTML = `Computer won the game!`;
+  } else if (playerScore === 5 && playerScore > computerScore) {
+    winnerMessage.style.color = 'var(--player)';
+    winnerMessage.innerHTML = `You won the game!`;
   }
+  return winnerMessage;
 }
 
-function game() {
-  for (let i = 0; i < 5; i++) {
-    let computerSelection = computerPlay();
-    let playerSelection = prompt().toLowerCase();
-    console.log(playRound(playerSelection, computerSelection));
+restartButton.addEventListener('click', () => {
+  location.reload();
+});
+
+function playRound(playerSelection, computerSelection) {
+  if (computerSelection === playerSelection) {
+    roundMessage.innerHTML = `It's a tie: ${playerSelection} and ${computerSelection}`;
+  } else if (
+    (computerSelection === 'Rock' && playerSelection === 'Paper') ||
+    (computerSelection === 'Paper' && playerSelection === 'Scissors') ||
+    (computerSelection === 'Scissors' && playerSelection === 'Rock')
+  ) {
+    playerScore++;
+    updateScore();
+    roundMessage.innerHTML = `You win the round: ${playerSelection} beats ${computerSelection}`;
+  } else {
+    computerScore++;
+    updateScore();
+    roundMessage.innerHTML = `Computer wins the round: ${computerSelection} beats ${playerSelection}`;
   }
-  return getWinner();
+  return updateScore();
 }
-console.log(game());
+
+function playGame() {
+  playerButtons.forEach((card) => {
+    card.addEventListener('click', () => {
+      let playerSelection = card.querySelector('img').alt;
+      let computerSelection = computerPlay();
+      playRound(playerSelection, computerSelection);
+      getWinner();
+    });
+  });
+}
+
+playGame();

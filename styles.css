@@ -1,0 +1,153 @@
+:root {
+  --background: #232530;
+  --accent: #fab795;
+  --main: #6c6f93;
+  --player: #09f7a0;
+  --computer: #e95678;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background);
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+}
+
+img {
+  max-width: 100%;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.score {
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  padding: 2em;
+  gap: 2em;
+}
+
+.player-score {
+  border: 2px solid var(--main);
+  border-radius: 5px;
+  color: var(--player);
+  padding: 1em;
+}
+
+.computer-score {
+  border: 2px solid var(--main);
+  border-radius: 5px;
+  color: var(--computer);
+  padding: 1em;
+}
+
+.game-window {
+  text-align: center;
+}
+
+.round-message {
+  font-size: 32px;
+  color: var(--main);
+}
+
+.winner-message {
+  font-size: 46px;
+}
+
+.restart {
+  background-color: var(--accent);
+  border-radius: 5px;
+  font-size: 18px;
+  color: #ffffff;
+  width: 120px;
+  padding: 1em;
+  transition: all 0.5s;
+}
+
+.restart span {
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.restart span::after {
+  content: '\00bb';
+  position: absolute;
+  top: 0;
+  right: -20px;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.restart:hover span {
+  padding-right: 20px;
+}
+
+.restart:hover span::after {
+  opacity: 1;
+  right: 0;
+}
+
+.player-cards {
+  display: flex;
+  gap: 1em;
+  font-size: 24px;
+  padding: 1em;
+  margin: auto;
+  max-width: 600px;
+}
+
+.card {
+  color: var(--main);
+  border-radius: 5px;
+  text-align: center;
+  padding: 1em;
+  transition: all 0.5s ease 0s;
+}
+
+button.card:hover {
+  color: white;
+  transform: scale(1.1);
+  text-decoration: underline;
+}
+
+#rock:hover {
+  background: #d64068;
+  box-shadow: 0 0 15px #fc86a5;
+}
+
+#paper:hover {
+  background: #f6b93b;
+  box-shadow: 0 0 15px #f5d28c;
+}
+
+#scissors:hover {
+  background: #69afcf;
+  box-shadow: 0 0 15px #8ccdeb;
+}
+
+@media (max-width: 500px) {
+  .score {
+    font-size: 12px;
+  }
+
+  .round-message {
+    font-size: 24px;
+  }
+
+  .winner-message {
+    font-size: 36px;
+  }
+
+  .player-cards {
+    flex-direction: column;
+    max-width: 120px;
+  }
+}
